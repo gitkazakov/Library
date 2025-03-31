@@ -57,9 +57,7 @@ jobs:
     env:
       Solution_Name: Library.sln  # Укажите название вашего решения
       Test_Project_Path: TestLibrary\TestLibrary.csproj  # Путь к вашему тестовому проекту
-      Wap_Project_Directory: C:\Users\il226\source\repos\Library  # Каталог проекта упаковки
-      Wap_Project_Path: C:\Users\il226\source\repos\Library\Library1.wapproj  # Путь к WAP проекту
-
+     
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -80,14 +78,6 @@ jobs:
     - name: Restore the application
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
       env:
-        Configuration: ${{ matrix.configuration }}
-
-    - name: Create the app package
-      run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
-      env:
-        Appx_Bundle: Always
-        Appx_Bundle_Platforms: x86|x64
-        Appx_Package_Build_Mode: StoreUpload
         Configuration: ${{ matrix.configuration }}
 
     - name: Remove the pfx
