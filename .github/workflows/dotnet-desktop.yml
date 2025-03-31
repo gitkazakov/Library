@@ -58,7 +58,7 @@ jobs:
       Solution_Name: Library.sln  # Укажите название вашего решения
       Test_Project_Path: TestLibrary\TestLibrary.csproj  # Путь к вашему тестовому проекту
       Wap_Project_Directory: Library  # Каталог проекта упаковки
-      Wap_Project_Path: Library\Library.wapproj  # Путь к WAP проекту
+      Wap_Project_Path: Library\Library1.wapproj  # Путь к WAP проекту
 
     steps:
     - name: Checkout
