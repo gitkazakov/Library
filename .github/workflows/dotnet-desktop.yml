@@ -87,6 +87,14 @@ jobs:
         $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
         $certificatePath = "C:\Users\il226\source\repos\Library\Library1\GitHubActionsWorkflow.pfx
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+         if (![string]::IsNullOrEmpty("${{ secrets.Base64_Encoded_Pfx }}")) {
+            $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+            $certificatePath = Join-Path -Path $env:Wap_Project_Directory -ChildPath "GitHubActionsWorkflow.pfx"
+            [IO.File]::WriteAllBytes($certificatePath, $pfx_cert_byte)
+        } else {
+            Write-Host "Base64 string is empty or invalid!"
+            exit 1  # Завершаем работу если строка Base64 пуста
+        }
 
     - name: Create the app package
       run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
