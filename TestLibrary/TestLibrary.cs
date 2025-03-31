@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Library;
+using Library1;
 using System;
 
 [TestFixture]
